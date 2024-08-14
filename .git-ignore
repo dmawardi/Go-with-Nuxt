@@ -1,0 +1,76 @@
+# Binaries for programs and plugins
+
+_.exe
+_.dll
+_.so
+_.dylib
+
+# Output directories
+
+/backend/bin/
+/backend/build/
+
+# OS-specific files
+
+.DS_Store
+Thumbs.db
+
+# Editor directories and files
+
+.vscode/
+.idea/
+\*.swp
+
+# Golang specific
+
+/vendor/
+_.exe
+_.log
+_.test
+_.out
+\*.prof
+
+# Node specific (for the frontend)
+
+frontend/node_modules/
+frontend/dist/
+frontend/.cache/
+
+# Logs
+
+logs/
+\*.log
+
+# Environment files
+
+.env
+.env.local
+.env._.local
+frontend/.env
+frontend/.env.local
+frontend/.env._.local
+
+# Ignore database files
+
+_.db
+_.sqlite3
+
+# Ignore test coverage output
+
+coverage/
+
+# Ignore IDE project files
+
+_.iml
+_.ipr
+\*.iws
+.idea/
+
+# Vite cache
+
+frontend/.vite/
+
+# Temporary files
+
+_.tmp
+_.temp
