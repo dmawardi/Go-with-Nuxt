@@ -9,3 +9,10 @@ Golang server serving VUE3 frontend
 ## frontend folder
 
 -contains Vue front-end
+
+```bash
+cd frontend
+npm install
+npm run format
+npm run dev
+```
