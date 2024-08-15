@@ -50,6 +50,9 @@ func (a api) Routes() http.Handler {
 	))
 	fmt.Printf("Serving Swagger docs at http://%s/swagger/index.html\n", app.BaseURL)
 
+	// Serve Front end Vue.js SPA
+	mux = ServeFrontEnd(mux, false)
+
 	// Build fileserver using static directory
 	fileServer := http.FileServer(http.Dir("./static"))
 	// Handle all calls to /static/* by stripping prefix and sending to file server

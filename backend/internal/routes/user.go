@@ -13,7 +13,6 @@ func AddUserApiRoutes(router *chi.Mux, user core.UserController) *chi.Mux {
 	router.Group(func(mux chi.Router) {
 		// @tag.name Public Routes
 		// @tag.description Unprotected routes
-		mux.Get("/", controller.GetJobs)
 		// Login
 		mux.Post("/api/users/login", user.Login)
 		// Forgot password
