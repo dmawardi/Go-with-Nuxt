@@ -6,6 +6,8 @@ Golang server serving VUE3 frontend
 
 -contains Golang back-end
 
+Navigate terminal to backend folder then use below command to run server.
+
 ```bash
 # Run server
 go run ./cmd
