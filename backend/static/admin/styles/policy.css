@@ -1,0 +1,100 @@
+/* Styling for the "Edit" button */
+.edit-policy-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  margin: auto;
+}
+
+/* Styling for the "Remove" button when Granted is true */
+.remove-policy-button {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  margin: auto;
+}
+
+/* Styling for the "Add" button when Granted is false */
+.add-policy-button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  margin: auto;
+}
+
+/* Styling for the "Add Role" section */
+.role-add-section {
+  /* margin: 1rem 0; */
+  background-color: #ccc;
+  border-radius: 5px;
+  color: black;
+}
+
+.role-add-section p {
+  margin: 0;
+  padding: 10px 0px 0px 20px;
+  font-weight: bolder;
+}
+
+.role-add-button-section {
+  border: #ccc 1px solid;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+}
+
+/* If remove policy active, */
+.inactive-policy {
+  color: #dc3545;
+}
+
+.active-policy {
+  color: #28a745;
+}
+
+/* Overall cell styling */
+.edit-policy-button-cell {
+  text-align: center;
+}
+
+/* Style the user table */
+.policy-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Style the table header */
+.policy-table th {
+  background-color: #007bff;
+  color: #fff;
+  text-align: left;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.policy-sub-table {
+  width: 100%;
+  border-collapse: collapse;
+  size: 10rem;
+}
+
+.policy-sub-table th {
+  background-color: #007bff;
+  color: #fff;
+  text-align: left;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.policy-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+}

@@ -1,0 +1,58 @@
+{{define "inheritance-table"}}
+<div>
+  <form class="action-form" id="action-form" action="">
+   {{template "policy-search" .}}
+    <!-- Table -->
+    <div class="data-table-container">
+      <table class="data-table">
+        <!-- Headers -->
+        <thead>
+          <tr>
+           
+            {{
+              range.TableData.TableHeaders
+            }}
+
+            {{/* Sortable table headers if sortable is true */}}
+            <th>
+            {{if .Sortable}}
+            <a href="#" onclick="sortTable('{{.ColumnSortLabel}}')">{{.Label}}</a>
+            {{else}}
+            {{.Label}}
+            {{end}}
+            </th>
+            {{
+              end
+            }}
+            
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <!-- Table Body -->
+        <tbody>
+          {{
+            range $rowIndex, $row := .TableData.TableRows
+          }}
+          <tr>
+            <!-- For each row -->
+           
+            {{
+              range $row.Data
+            }}
+            <td>{{.Label}}</td>
+            {{
+              end
+            }}
+            <td>
+              <a href="{{.Edit.DeleteUrl}}">Delete</a>
+            </td>
+          </tr>
+          {{
+            end
+          }}
+        </tbody>
+      </table>
+    </div>
+  </form>
+</div>
+{{ end }}

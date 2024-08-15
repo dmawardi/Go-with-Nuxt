@@ -1,0 +1,136 @@
+{{define "policy-edit-form"}}
+<div class="content-container">
+    <div>
+      <h1>{{.SectionTitle}}</h1>
+      <div class="form-group">
+        <table class="policy-table">
+          <thead>
+            <tr>
+              <th>Role</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {{
+               range $policyIndex, $policy := .PolicySection.FocusedPolicies
+            }}
+            <tr>
+              <td>{{.Role}}</td>
+
+              {{/* CRUD Section */}}
+              <td>
+                <table class="policy-sub-table">
+                  <thead>
+                    <tr>
+                      <th>Resource</th>
+                      <th>Action</th>
+                      <th>Edit</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <form>
+                      <tr>
+                        <td rowspan="4">{{ $policy.Resource }}</td>
+                        {{
+                          range.Actions
+                        }}
+                        {{if .Granted}}
+                        <td class="active-policy">{{ .Action }}</td>
+                        <td class="edit-policy-button-cell">
+                          <button
+                            type="submit"
+                            class="remove-policy-button"
+                            onclick="editPolicy(event,
+                                'delete',
+                                '{{ $policy.Role }}',
+                                '{{ $policy.Resource }}',
+                                '{{.Action}}' )"
+                          >
+                            Remove
+                          </button>
+                        </td>
+                        {{else}}
+                        <td class="inactive-policy">{{ .Action }}</td>
+                        <td class="edit-policy-button-cell">
+                          <button
+                            type="submit"
+                            class="add-policy-button"
+                            onclick="editPolicy(event,
+                                    'create',
+                                    '{{ $policy.Role }}',
+                                    '{{ $policy.Resource }}',
+                                    '{{.Action}}' )"
+                          >
+                            Add
+                          </button>
+                        </td>
+
+                        {{
+                          end
+                        }}
+                      </tr>
+                    </form>
+
+                    {{
+                      end
+                    }}
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            {{
+              end
+            }}
+          </tbody>
+        </table>
+      </div>
+
+      {{/* Submission buttons */}}
+      {{if len .PolicySection.Selectors.RoleSelection}}
+      <div class="role-add-section">
+        <form class="role-add-form" id="role-add-form">
+          <p>Add a role & action to this route</p>
+          <div class="role-add-button-section">
+            {{/* Role selector */}}
+            <label for="role">Role:</label>
+            <select name="role" id="role">
+              {{
+                range.PolicySection.Selectors.RoleSelection
+              }}
+              <option value="{{.Value}}" {{if .Selected}}selected{{ end }}>
+                {{.Label}}
+              </option>
+              {{
+                end
+              }}
+            </select>
+
+            {{/* Action selector */}}
+            <label for="role">Action:</label>
+            <select name="action" id="action">
+              {{
+                range.PolicySection.Selectors.ActionSelection
+              }}
+              <option value="{{.Value}}" {{if .Selected}}selected{{ end }}>
+                {{.Label}}
+              </option>
+              {{
+                end
+              }}
+            </select>
+            <button
+              type="submit"
+              class="button-primary"
+              onclick="addRole(event, '{{.PolicySection.PolicyResource }}')"
+            >
+              Add Role to this resource
+            </button>
+          </div>
+        </form>
+      </div>
+      {{ end }}
+    </div>
+  {{ end }}
+  
+</div>

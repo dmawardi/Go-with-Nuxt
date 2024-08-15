@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "**/*.html": "html",
+    "internal/admin-panel/templates/**/*.html": "html",
+    "internal/admin-panel/templates/*.html": "html"
+  }
+}

@@ -1,0 +1,19 @@
+{{ define "header" }}
+<header class="admin-header">
+  <div class="admin-logo"><a href="{{ .HomeUrl }}">Admin Panel</a></div>
+  <div class="right-header">
+    <div>Welcome, Admin.</div>
+
+    <div class="admin-nav">
+      <ul>
+        <li><a href="{{ .ViewSiteUrl }}">VIEW SITE</a></li>
+        <li>
+          <a href="{{ .ChangePasswordUrl }}">CHANGE PASSWORD</a>
+        </li>
+        <li><a href="{{ .LogOutUrl }}">LOG OUT</a></li>
+        <!-- Add more navigation links as needed -->
+      </ul>
+    </div>
+  </div>
+</header>
+{{ end }}

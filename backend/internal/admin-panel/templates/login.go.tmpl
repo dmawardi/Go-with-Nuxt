@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ .PageTitle }}</title>
+    <link rel="stylesheet" href="/static/admin/styles/base.css" />
+    <link rel="stylesheet" href="/static/admin/styles/form.css" />
+  </head>
+  <body>
+    <div class="login-container">
+      <h2>Admin Login</h2>
+      <!-- Failed loginError message placeholder -->
+      <div class="error-message">
+        {{if not (eq .SectionTitle "")}}
+        <p>{{.SectionTitle}}</p>
+        {{ end }}
+      </div>
+      <form
+        class="login-form"
+        action="{{.FormData.FormDetails.FormAction}}"
+        method="{{.FormData.FormDetails.FormMethod}}"
+      >
+        {{ range.FormData.FormFields }}
+        <div class="form-group">
+          <label for="{{.Name}}">
+            {{.Label}}
+            {{if .Required}}
+            <span class="required">*</span>
+            {{ end }}
+          </label>
+          <br />
+          <input
+            class="form-input"
+            type="{{.Type}}"
+            class="form-control"
+            id="{{.Name}}"
+            name="{{.Name}}"
+            placeholder="{{.Placeholder}}"
+            value="{{.Value}}"
+            {{if
+            .Required}}required{{end}}
+            {{if
+            .Disabled}}disabled{{end}}
+          />
+          <!-- Error message placeholder -->
+          <div class="error-message">
+            {{if .Errors}}
+            {{ range.Errors }}
+            <p>{{.}}</p>
+            {{ end }}
+            {{ end }}
+          </div>
+        </div>
+        {{ end }}
+        <button type="submit" class="button-primary">Login</button>
+      </form>
+    </div>
+  </body>
+</html>

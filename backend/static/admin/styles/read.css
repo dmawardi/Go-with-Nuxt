@@ -1,0 +1,145 @@
+/* Holds CSS styling for table results */
+
+.search-box {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ebebeb;
+  border-radius: 5px;
+  background-color: #c2c2c2;
+  color: black;
+}
+
+.search-input {
+  width: 60%;
+}
+/* Style the action box container */
+#action-box {
+  /* background-color: #f2f2f2; */
+  padding: 10px;
+  /* border: 1px solid #ccc; */
+  margin-bottom: 20px;
+}
+
+/* Style the action label */
+.action-label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+/* Style the action select dropdown */
+.action-select {
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Style the action submit button */
+.action-submit {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 15px;
+  cursor: pointer;
+}
+
+/* Style the action submit button on hover */
+.action-submit:hover {
+  background-color: #0056b3;
+}
+
+/* Style the user table container */
+.data-table-container {
+  margin-top: 20px;
+}
+
+/* Style the user table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Style the table header */
+.data-table th {
+  background-color: #007bff;
+  color: #fff;
+  text-align: left;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+/* Style the table data rows */
+.data-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+/* Style the "Edit" and "Delete" links */
+.data-table tr a {
+  text-decoration: none;
+  color: #7bb9fa;
+  margin-right: 10px;
+}
+
+.data-table th a {
+  color: #fff;
+}
+
+/* Style the "Edit" and "Delete" links on hover */
+.data-table a:hover {
+  text-decoration: underline;
+}
+
+.checkbox-column {
+  width: 12px;
+}
+
+/* Search box */
+.record-nav-buttons {
+  text-align: center;
+  margin-top: 1vh;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.records-per-page {
+  text-align: right;
+}
+
+.search-form-col {
+  flex: 1;
+}
+
+.search-form-row {
+  display: flex;
+  flex-direction: column; /* Stack columns vertically on small screens */
+  gap: 10px; /* Space between columns */
+}
+
+/* Pagination */
+.pagination-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.pagination-section,
+.showing-section {
+  margin: 0.5vh 1vw;
+  text-align: end;
+}
+
+/* Large screens (desktops) */
+@media (min-width: 993px) {
+  /* Adjust styles for large screens */
+  .search-input {
+    width: 25vw;
+  }
+
+  /* Search box */
+  .search-form-row {
+    flex-direction: row;
+  }
+}

@@ -1,0 +1,20 @@
+{{define "policy-find-all"}}
+{{if eq .PageType.PolicyMode "policy"}}
+<div class="content-container">
+    <div>
+      <h1>{{.SectionTitle}}</h1>
+      <!-- Data table (includes action box) -->
+      {{ template "groups-table" . }}
+    </div>
+  </div>
+</div>
+{{else if eq .PageType.PolicyMode "inheritance"}}
+<div class="content-container">
+    <div>
+      <h1>{{.SectionTitle}}</h1>
+      <!-- Data table (includes action box) -->
+      {{ template "inheritance-table" . }}
+    </div>
+  </div>
+  {{ end }}
+{{end}}

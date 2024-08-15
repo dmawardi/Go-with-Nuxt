@@ -1,0 +1,48 @@
+{{define "groups-table"}}
+    <div class="container">
+   {{template "policy-search" .}}
+    <!-- Table -->
+    <div class="data-table-container">
+      <table class="data-table">
+        <!-- Headers -->
+        <thead>
+          <tr>
+            {{
+              range.TableData.TableHeaders
+            }}
+            <th>{{.Label}}</th>
+            {{
+              end
+            }}
+          </tr>
+        </thead>
+        <!-- Table Body -->
+        <tbody>
+          {{
+            range $rowIndex, $row := .TableData.TableRows
+          }}
+          <tr>
+            <!-- For each row -->
+            {{
+              range $index, $element := .Data
+            }}
+            <td {{if ge $element.RowSpan 1}} rowspan="{{.RowSpan}}" {{end}}>
+              {{if and (eq $index 0) (gt (len $row.Data) 2)}}
+                <a href="policy/{{$element.EditLink}}">{{$element.Label}}</a>
+              {{else}}
+                {{$element.Label}}
+              {{end}}
+            </td>
+            {{
+              end
+            }}
+          </tr>
+          {{
+            end
+          }}
+        </tbody>
+      </table>
+    </div>
+    </div>
+{{end}}
+`

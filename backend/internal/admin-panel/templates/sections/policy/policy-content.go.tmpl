@@ -1,0 +1,28 @@
+{{define "policy-content"}}
+  {{/* Find / Edit */}}
+  {{if .PageType.EditPage}}
+  {{template "policy-edit-form" .}}
+
+  {{/* Find All */}}
+  {{else if .PageType.ReadPage}}
+  {{template "policy-find-all" .}}
+
+  {{/* Create */}}
+  {{else if .PageType.CreatePage}}
+  {{template "policy-create-form" .}}
+
+  {{/* Delete */}}
+  {{else if .PageType.DeletePage}}
+  {{template "delete" .}}
+
+  {{/* Success */}}
+  {{else if .PageType.SuccessPage}}
+  {{ template "success" . }}
+
+  {{/* Error */}}
+  {{else}}
+  {{template "fail"}}
+  {{ end }}
+
+  {{ end }}
+</div>

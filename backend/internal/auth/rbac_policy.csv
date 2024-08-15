@@ -1,0 +1,47 @@
+# User Policies
+p,role:user,/api/me,read
+p,role:user,/api/me,update
+p,role:user,/api/posts,read
+# Email Verification
+p,role:user,/api/users/send-verification-email,create
+
+
+
+# Moderator Policies
+p,role:moderator,/api/users,read
+p,role:moderator,/api/me,read
+p,role:moderator,/api/me,update
+p,role:moderator,/api/posts,create
+p,role:moderator,/api/posts,update
+p,role:moderator,/api/posts,delete
+
+
+# Admin Policies
+p,role:admin,/api/users,read
+p,role:admin,/api/users,create
+p,role:admin,/api/users,update
+p,role:admin,/api/users,delete
+p,role:admin,/api/me,read
+p,role:admin,/api/me,update
+# Authorization Policies
+p,role:admin,/api/auth,read
+p,role:admin,/api/auth,create
+p,role:admin,/api/auth,update
+p,role:admin,/api/auth,delete
+p,role:admin,/api/auth/**,read
+p,role:admin,/api/auth/**,create
+p,role:admin,/api/auth/**,update
+p,role:admin,/api/auth/**,delete
+p,role:admin,/api/auth/roles,read
+p,role:admin,/api/auth/roles,update
+p,role:admin,/api/auth/roles,delete
+p,role:admin,/api/auth/roles,read
+# Admin panel
+p,role:admin,/admin/**,create
+p,role:admin,/admin/**,read
+p,role:admin,/admin/**,update
+p,role:admin,/admin/**,delete
+
+# Group Inheritance
+g,role:moderator,role:user
+g,role:admin,role:moderator

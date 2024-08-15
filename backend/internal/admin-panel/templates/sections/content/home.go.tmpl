@@ -1,0 +1,46 @@
+{{define "home"}}
+<div class="info">
+    <header>
+      <h1>{{.SectionTitle}}</h1>
+    </header>
+     <section>
+            <h2>Authorization Section</h2>
+            <p>This crucial area of the panel is divided into three main portions: Permissions, Roles, and Inheritance.</p>
+
+            <div class="highlighted-section">
+                <h3>Permissions</h3>
+                <p>
+                    Manage creation and updates of resources, typically represented as URLs, and their associated permissions including create, read, update, and delete, grouped by role. Utilize single (*) and double (**) wildcards for sub-URL permissions.
+                </p>
+            </div>
+
+            <div class="highlighted-section">
+                <h3>Roles</h3>
+                <p>
+                    Create roles within the application and assign specific sets of permissions to these roles for structured and organized access management.
+                </p>
+            </div>
+
+            <div class="highlighted-section">
+                <h3>Inheritance</h3>
+                <p>
+                    Set up hierarchical structures within roles to allow certain roles to inherit permissions from others, simplifying complex permission structures.
+                </p>
+            </div>
+    </section>
+
+    <section>
+            <h2>User Schema</h2>
+            <p>
+                Link directly to the permissions with role assignments for individual users. Manage user access levels and roles efficiently.
+            </p>
+    </section>
+
+    <section>
+            <h2>Other Schemas</h2>
+            <p>
+                Below the User Schema, find all other schemas associated with the application, including data models, settings, and other configurations.
+            </p>
+    </section>
+</div>
+{{end}}

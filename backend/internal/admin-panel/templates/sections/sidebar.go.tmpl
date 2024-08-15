@@ -1,0 +1,38 @@
+{{define "sidebar"}}
+<!-- Sidebar -->
+<div class="sidebar">
+  <ul class="sidebar-menu">
+  <li class="sidebar-item">
+    <div class="sidebar-label">
+      <a href="/admin/actions">Recorded Actions</a>
+    </div>
+  </li>
+    <li class="sidebar-item">
+      <div class="sidebar-label">Authorization</div>
+      <ul class="auth-menu">
+        {{ range.SidebarList.Auth }}
+        <li class="auth-section-sidebar-item">
+          <div class="auth-section-subtitle">
+            <a href="{{.FindAllLink}}"> {{.Name}} </a>
+          </div>
+          <a class="add-link" href="{{.AddLink}}">
+            <div class="plus-sign">+</div>
+          </a>
+        </li>
+        {{ end }}
+      </ul>
+    </li>
+    {{ range.SidebarList.Main }}
+    <li class="sidebar-item">
+      <div class="sidebar-label">
+        <a href="{{.FindAllLink}}"> {{.Name}} </a>
+      </div>
+      <a class="add-link" href="{{.AddLink}}">
+        <div class="plus-sign">+</div>
+      </a>
+    </li>
+    {{ end }}
+  </ul>
+  <!-- Add more sidebar items as needed -->
+</div>
+{{ end }}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+      }
+      .container {
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 7px;
+        background-color: #f9f9f9;
+      }
+      .button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 20px;
+        border-radius: 5px;
+        background-color: #017cff;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      .footer {
+        margin-top: 30px;
+        font-size: 0.8em;
+        text-align: center;
+        color: #777;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Email Verification</h2>
+      <p>Dear {{.Name}},</p>
+      <p>
+        Almost there! Please verify your email to get access to all our
+        features!
+      </p>
+      <p>Please click the button below to verify your email address.</p>
+      <a href="{{.TokenUrl}}" class="button">Verify</a>
+      <p>
+        If you have already verified your email. Please disregard this message.
+      </p>
+      <p>Best Regards,</p>
+      <p>Your Company Team</p>
+
+      <div class="footer">
+        <p>Go Template Inc.</p>
+        <p>My street address</p>
+        <p>City, State, Zip Code</p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+{{define "action-home"}}
+<div class="content-container">
+    <div class="content-container">
+      <div>
+        <h1>{{.SectionTitle}}</h1>
+        <!-- Search box -->
+        {{template "search" .}}
+
+        <!-- Data table (includes action box) -->
+        {{ template "data-table" . }}
+      </div>
+  </div>
+</div>
+{{end}}

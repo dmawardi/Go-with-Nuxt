@@ -1,0 +1,100 @@
+{{define "policy-create-form"}}
+<div class="content-container">
+    <div>
+      <h1>{{.SectionTitle}}</h1>
+      <form
+        class="form admin-form"
+        action="{{.FormData.FormDetails.FormAction}}"
+        method="{{.FormData.FormDetails.FormMethod}}"
+      >
+        {{/* Form Fields */}}
+        {{ range.FormData.FormFields }}
+        <div class="form-group">
+          <label for="{{.Name}}">
+            {{.Label}}
+            {{if .Required}}
+            <span class="required">*</span>
+            {{ end }}
+          </label>
+          <br />
+
+          {{/* Types of Form Fields */}}
+          {{/* If a disabled value is found render without input */}}
+          {{if .Disabled }}
+          <div class="form-input-disabled">
+            <span class="disabled-value">
+              {{.Placeholder}}
+            </span>
+          </div>
+
+          {{/* Selector */}}
+          {{else if eq .Type "select"}}
+          <select name="{{.Name}}" id="{{.Name}}">
+            {{
+              range.Selectors
+            }}
+            <option value="{{.Value}}" {{if .Selected}}selected{{ end }}>
+              {{.Label}}
+            </option>
+            {{
+              end
+            }}
+          </select>
+
+          {{/* Checkbox */}}
+          {{else if eq .Type "checkbox"}}
+          <input class="form-checkbox" type="{{.Type}}" class="form-control"
+          id="{{.Name}}" name="{{.Name}}" value="{{.Value}}"
+          {{if eq .Placeholder "true" }}checked{{ end }}
+          {{if .Required}}required{{ end }} {{if .Disabled}}disabled{{ end }}
+          />
+
+          {{/* Text area */}}
+          {{else if eq .Type "textarea"}}
+          <textarea
+            class="form-checkbox"
+            type="{{.Type}}"
+            class="form-control"
+            id="{{.Name}}"
+            name="{{.Name}}"
+            placeholder="{{.Placeholder}}"
+            value="{{.Value}}"
+            {{if
+            .Required}}required{{end}}
+          ></textarea>
+
+          {{/* Normal input */}}
+          {{else}}
+          <input
+            class="form-input"
+            type="{{.Type}}"
+            class="form-control"
+            id="{{.Name}}"
+            name="{{.Name}}"
+            placeholder="{{.Placeholder}}"
+            value="{{.Value}}"
+            {{if
+            .Required}}required{{end}}
+            {{if
+            .Disabled}}disabled{{end}}
+          />
+          {{ end }}
+          <!-- Error message placeholder -->
+          <div class="error-message">
+            {{if .Errors}}
+            {{ range.Errors }}
+            <p>{{.}}</p>
+            {{ end }}
+            {{ end }}
+          </div>
+        </div>
+        {{ end }}
+
+        {{/* Submission buttons */}}
+        <button type="submit" class="button-primary">
+          Create
+        </button>
+      </form>
+    </div>
+</div>
+{{ end }}

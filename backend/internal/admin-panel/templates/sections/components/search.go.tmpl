@@ -1,0 +1,87 @@
+{{define "search"}}
+<div class="search-box">
+  <form
+    class="search-form"
+    action="{{.FormData.FormDetails.FormAction}}"
+    method="{{.FormData.FormDetails.FormMethod}}"
+  >
+    <div class="search-form-row">
+      <div class="search-form-col">
+        {{/* Search box */}}
+        <input
+          type="text"
+          id="search-input"
+          class="search-input"
+          name="search"
+          placeholder="Search Records"
+          value="{{.SearchTerm}}"
+        />
+        <button type="submit" class="button-primary">Search</button>
+      </div>
+      <div class="search-form-col">
+        {{/* Page navigation buttons */}}
+        <div class="record-nav-buttons">
+          {{if .TableData.MetaData.Prev_Page}}
+          <button
+            type="submit"
+            name="page"
+            value="{{.TableData.MetaData.Prev_Page}}"
+          >
+            <
+          </button>
+          {{ end }}
+          <div class="pagination-section">
+            <span>Page</span>
+            <span class="page-of-section">
+              {{.TableData.MetaData.Current_Page}} of
+              {{.TableData.MetaData.Total_Pages}}
+            </span>
+          </div>
+          {{if .TableData.MetaData.Next_Page}}
+          <button
+            type="submit"
+            name="page"
+            value="{{.TableData.MetaData.Next_Page}}"
+          >
+            >
+          </button>
+          {{ end }}
+        </div>
+
+        {{/* Records per page section */}}
+        <div class="showing-section">
+          <span
+            >Showing {{.TableData.MetaData.Currently_Showing}} of
+            {{.TableData.MetaData.Total_Records}}</span
+          >
+        </div>
+        <div class="records-per-page">
+          <label for="recordsPerPage">Records per page:</label>
+          <select
+            id="recordsPerPage"
+            name="limit"
+            onchange="this.form.submit()"
+          >
+            {{
+              range.RecordsPerPageSelector
+            }}
+            <option
+              value="{{.}}"
+              {{if
+              eq
+              $.TableData.MetaData.Records_Per_Page
+              .}}selected{{end}}
+            >
+              {{.}}
+            </option>
+            {{
+              end
+            }}
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+{{ end }}
+`

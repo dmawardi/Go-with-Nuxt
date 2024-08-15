@@ -1,0 +1,24 @@
+{{define "policy-search"}}
+<div class="search-box">
+  <form
+    class="search-form"
+    action="{{.FormData.FormDetails.FormAction}}"
+    method="{{.FormData.FormDetails.FormMethod}}"
+  >
+    <div class="search-form-row">
+      <div class="search-form-col">
+        {{/* Search box */}}
+        <input
+          type="text"
+          id="search-input"
+          class="search-input"
+          name="search"
+          placeholder="Search Records"
+          value="{{.SearchTerm}}"
+        />
+        <button type="submit" class="button-primary">Search</button>
+      </div>
+    </div>
+  </form>
+</div>
+{{ end }}

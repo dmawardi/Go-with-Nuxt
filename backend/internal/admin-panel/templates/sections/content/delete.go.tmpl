@@ -1,0 +1,17 @@
+{{define "delete"}}
+<div class="content-container">
+    <div>
+        <h1>{{.SectionTitle}}</h1>
+          <form
+            class="form delete-form"
+            action="{{.FormData.FormDetails.FormAction}}"
+            method="{{.FormData.FormDetails.FormMethod}}"
+          >
+            <div class="button-container">
+              <a href="{{.SchemaHome}}" class="delete-cancel-button">Cancel</a>
+              <button type="submit" class="button-danger">Delete</button>
+            </div>
+          </form>
+    </div>
+  </div>
+{{end}}

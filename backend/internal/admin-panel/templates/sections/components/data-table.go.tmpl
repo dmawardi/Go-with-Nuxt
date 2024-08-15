@@ -1,0 +1,92 @@
+{{define "data-table"}}
+<div>
+  <form class="action-form" id="action-form" action="">
+    <div class="action-box">
+      <div id="action-box" class="actions">
+        <label for="action-select" class="action-label">Action:</label>
+        <select name="action" id="action-select" class="action-select" required>
+          <option value="" selected>---------</option>
+          <option value="delete">Delete selected items</option>
+          <!-- Add more action options as needed -->
+        </select>
+        <input type="submit" value="Go" class="action-submit" id="action-submit" onclick="commitMultiAction(event, '{{.SchemaHome}}')" />
+      </div>
+    </div>
+    <!-- Table -->
+    <div class="data-table-container">
+      <table class="data-table">
+        <!-- Headers -->
+        <thead>
+          <tr>
+            <th class="checkbox-column">
+              <input
+                type="checkbox"
+                id="select-all"
+                onclick="selectAllRows(this)"
+              />
+              <label for="select-all"></label>
+            </th>
+            {{
+              range.TableData.TableHeaders
+            }}
+
+            {{/* Sortable table headers if sortable is true */}}
+            <th>
+            {{if .Sortable}}
+            <a href="#" onclick="sortTable('{{.ColumnSortLabel}}')">{{.Label}}</a>
+            {{else}}
+            {{.Label}}
+            {{end}}
+            </th>
+            {{
+              end
+            }}
+            
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <!-- Table Body -->
+        <tbody>
+          {{
+            range $rowIndex, $row := .TableData.TableRows
+          }}
+          <tr>
+            <!-- For each row -->
+            <td>
+              <input
+                type="checkbox"
+                name="selected_items"
+                class="select-row"
+                value="{{ (index $row.Data 0).Label}}"
+                onclick="updateSelectAll(this)"
+              />
+              <label for="{{ printf "select-row-%s" (index $row.Data 0).Label }}"></label>
+            </td>
+            {{
+              range $row.Data
+            }}
+            <td>{{.Label}}</td>
+            {{
+              end
+            }}
+            <td>
+             {{/* Edit Section */}}
+            {{if .Edit.EditAllowed}}
+              <a href="{{.Edit.EditUrl}}">Edit</a>
+              <a href="{{.Edit.DeleteUrl}}">Delete</a>
+             {{/* View Section */}}
+            {{else}}
+              <a href="{{.Edit.EditUrl}}">View</a>
+            {{end}}
+
+            </td>
+          </tr>
+          {{
+            end
+          }}
+        </tbody>
+      </table>
+    </div>
+  </form>
+</div>
+{{ end }}

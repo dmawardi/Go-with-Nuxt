@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ .PageTitle }}</title>
+    <link rel="stylesheet" href="/static/admin/styles/base.css" />
+    <link rel="stylesheet" href="/static/admin/styles/form.css" />
+    <link rel="stylesheet" href="/static/admin/styles/policy.css" />
+    <link rel="stylesheet" href="/static/admin/styles/read.css" />
+  </head>
+  <body>
+    {{ template "header" .HeaderSection }}
+    <section class="main">
+      {{ template "sidebar" . }}
+      <div class="content-section">
+        {{ template "policy-content" . }}
+      </div>
+    </section>
+    {{ template "footer" . }}
+    <script src="/static/admin/js/table.js"></script>
+    <script src="/static/admin/js/policy.js"></script>
+  </body>
+</html>

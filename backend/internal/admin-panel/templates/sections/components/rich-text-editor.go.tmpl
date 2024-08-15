@@ -1,0 +1,29 @@
+{{define "rich-text-editor"}}
+    <div id="toolbar">
+            <button type="button" onclick="wrapText('b')"><strong>B</strong></button>
+            <button type="button" onclick="wrapText('i')"><em>I</em></button>
+            <button type="button" onclick="wrapText('u')"><u>U</u></button>
+            <button type="button" onclick="addLink()">🔗 Link</button>
+            <button type="button" onclick="addCode()">📄 Code</button>
+            <button type="button" onclick="addTable()">📊 Table</button>
+            <button type="button" onclick="addBulletList()">• Bullet List</button>
+            <button type="button" onclick="addNumberedList()">1. Numbered List</button>
+        </div>
+        <div id="editor-container">
+            {{/* Text input area */}}
+            <textarea 
+            id="editor"
+            type="{{.Type}}"
+            class="form-control"
+            name="{{.Name}}"
+            placeholder="{{.Placeholder}}"
+            {{if
+            .Required}}required{{end}}
+            oninput="updatePreview()"
+            onkeydown="handleKeyDown(event)"
+            >{{.Value}}</textarea>
+
+            {{/* Preview area */}}
+            <div id="preview"></div>
+        </div>
+{{end}}

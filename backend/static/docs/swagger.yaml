@@ -1,0 +1,1015 @@
+basePath: /api/
+definitions:
+  db.Post:
+    properties:
+      body:
+        type: string
+      created_at:
+        type: string
+      deletedAt:
+        $ref: "#/definitions/gorm.DeletedAt"
+      id:
+        type: integer
+      title:
+        type: string
+      updated_at:
+        type: string
+      user:
+        $ref: "#/definitions/db.User"
+      user_id:
+        type: integer
+    type: object
+  db.User:
+    properties:
+      created_at:
+        type: string
+      deletedAt:
+        $ref: "#/definitions/gorm.DeletedAt"
+      email:
+        type: string
+      id:
+        description: gorm.Model `json:"-"`
+        type: integer
+      name:
+        type: string
+      posts:
+        description: Relationships
+        items:
+          $ref: "#/definitions/db.Post"
+        type: array
+      updated_at:
+        type: string
+      username:
+        type: string
+      verification_code:
+        type: string
+      verification_code_expiry:
+        type: string
+      verified:
+        description: Verification
+        type: boolean
+    type: object
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+  models.CasbinRoleAssignment:
+    properties:
+      role:
+        type: string
+      user_id:
+        type: string
+    type: object
+  models.CreatePost:
+    properties:
+      body:
+        type: string
+      title:
+        type: string
+      user:
+        $ref: "#/definitions/db.User"
+    type: object
+  models.CreateUser:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      role:
+        type: string
+      username:
+        type: string
+      verified:
+        type: boolean
+    type: object
+  models.GRecord:
+    properties:
+      inherits_from:
+        type: string
+      role:
+        type: string
+    type: object
+  models.Login:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  models.LoginResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  models.PaginatedPosts:
+    properties:
+      data:
+        items:
+          $ref: "#/definitions/db.Post"
+        type: array
+      meta: {}
+    type: object
+  models.PaginatedUsersWithRole:
+    properties:
+      data:
+        items:
+          $ref: "#/definitions/models.UserWithRole"
+        type: array
+      meta: {}
+    type: object
+  models.PolicyRule:
+    properties:
+      action:
+        type: string
+      resource:
+        type: string
+      role:
+        type: string
+    type: object
+  models.ResetPasswordAndEmailVerification:
+    properties:
+      email:
+        type: string
+    type: object
+  models.UpdateCasbinRule:
+    properties:
+      new_policy:
+        $ref: "#/definitions/models.PolicyRule"
+      old_policy:
+        $ref: "#/definitions/models.PolicyRule"
+    type: object
+  models.UpdatePost:
+    properties:
+      body:
+        type: string
+      title:
+        type: string
+      user:
+        $ref: "#/definitions/db.User"
+    type: object
+  models.UpdateUser:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      role:
+        type: string
+      username:
+        type: string
+      verified:
+        type: boolean
+    type: object
+  models.UserWithRole:
+    properties:
+      created_at:
+        type: string
+      deletedAt:
+        $ref: "#/definitions/gorm.DeletedAt"
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      role:
+        type: string
+      updated_at:
+        type: string
+      username:
+        type: string
+      verification_code:
+        type: string
+      verification_code_expiry:
+        type: string
+      verified:
+        description: Verification
+        type: boolean
+    type: object
+  models.ValidationError:
+    properties:
+      validation_errors:
+        additionalProperties:
+          items:
+            type: string
+          type: array
+        type: object
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a template API server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Go Template
+  version: "1.0"
+paths:
+  /auth:
+    delete:
+      consumes:
+        - application/json
+      description: Accepts a policy as a JSON body and deletes the policy
+      parameters:
+        - description: policy
+          in: body
+          name: policy
+          required: true
+          schema:
+            $ref: "#/definitions/models.PolicyRule"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Policy deletion successful!
+          schema:
+            type: string
+        "400":
+          description: Can't delete policy
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      summary: Deletes an authorization policy
+      tags:
+        - Authorization
+    get:
+      consumes:
+        - application/json
+      description:
+        Accepts search (added as non-case sensitive LIKE) as query parameters
+        and returns matching policies
+      parameters:
+        - description: search (added to all string conditions as LIKE SQL search)
+          in: query
+          name: search
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              additionalProperties: true
+              type: object
+            type: array
+        "400":
+          description: Can't find policies
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      summary: Finds a list of authorization policies
+      tags:
+        - Authorization
+    post:
+      consumes:
+        - application/json
+      description: Accepts a policy as a JSON body and creates the policy
+      parameters:
+        - description: policy
+          in: body
+          name: policy
+          required: true
+          schema:
+            $ref: "#/definitions/models.PolicyRule"
+      produces:
+        - application/json
+      responses:
+        "201":
+          description: Policy creation successful!
+          schema:
+            type: string
+        "400":
+          description: Can't create policy
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      summary: Creates an authorization policy
+      tags:
+        - Authorization
+    put:
+      consumes:
+        - application/json
+      description: Accepts a policy as a JSON body and updates the policy
+      parameters:
+        - description: policy
+          in: body
+          name: policy
+          required: true
+          schema:
+            $ref: "#/definitions/models.UpdateCasbinRule"
+      produces:
+        - application/json
+      responses:
+        "201":
+          description: Policy update successful!
+          schema:
+            type: string
+        "400":
+          description: Can't update policy
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      summary: Updates an authorization policy
+      tags:
+        - Authorization
+  /auth/{policy-slug}:
+    get:
+      consumes:
+        - application/json
+      description:
+        "Accepts resource as a URL parameter (in slug form: replace all
+        '/' with '-') and returns matching policies associated with resource"
+      parameters:
+        - description: policy-slug
+          in: path
+          name: policy-slug
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              additionalProperties: true
+              type: object
+            type: array
+        "400":
+          description: Can't find policies for resource
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      summary: Finds a list of authorization policies by resource
+      tags:
+        - Authorization
+  /auth/inheritance:
+    delete:
+      consumes:
+        - application/json
+      description:
+        Accepts a role inheritance as a JSON body and deletes the role
+        inheritance
+      parameters:
+        - description: Inheritance Record
+          in: body
+          name: inheritance
+          required: true
+          schema:
+            $ref: "#/definitions/models.GRecord"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Inheritance deletion successful!
+          schema:
+            type: string
+        "400":
+          description: Can't delete inheritance
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      summary: Deletes a role inheritance
+      tags:
+        - Authorization
+    get:
+      consumes:
+        - application/json
+      description: Returns a list of role inheritance policies
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              additionalProperties:
+                type: string
+              type: object
+            type: array
+        "400":
+          description: Can't find roles
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      summary: Finds a list of role inheritance
+      tags:
+        - Authorization
+    post:
+      consumes:
+        - application/json
+      description:
+        Accepts a role inheritance as a JSON body and creates the role
+        inheritance
+      parameters:
+        - description: Inheritance Record
+          in: body
+          name: inheritance
+          required: true
+          schema:
+            $ref: "#/definitions/models.GRecord"
+      produces:
+        - application/json
+      responses:
+        "201":
+          description: Inheritance creation successful!
+          schema:
+            type: string
+        "400":
+          description: Can't create inheritance
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      summary: Creates a role inheritance
+      tags:
+        - Authorization
+  /auth/roles:
+    get:
+      consumes:
+        - application/json
+      description: Returns a list of roles
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+        "400":
+          description: Can't find roles
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      summary: Finds a list of roles
+      tags:
+        - Authorization
+    put:
+      consumes:
+        - application/json
+      description:
+        Accepts a user_id and role as a JSON body and assigns the role
+        to the user
+      parameters:
+        - description: Role Assignment
+          in: body
+          name: RoleAssignment
+          required: true
+          schema:
+            $ref: "#/definitions/models.CasbinRoleAssignment"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: User assigned role successfully!
+          schema:
+            type: string
+        "400":
+          description: Can't assign user
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      summary: Assigns a role to a user
+      tags:
+        - Authorization
+  /me:
+    get:
+      consumes:
+        - application/json
+      description: Return my user details
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/models.UserWithRole"
+        "400":
+          description: Can't find user details
+          schema:
+            type: string
+        "403":
+          description: Error parsing authentication token
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      summary: Get my user profile details
+      tags:
+        - My Profile
+    put:
+      consumes:
+        - application/json
+      description: Updates the currently logged in user
+      parameters:
+        - description: Update User
+          in: body
+          name: user
+          required: true
+          schema:
+            $ref: "#/definitions/models.UpdateUser"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/models.UserWithRole"
+        "400":
+          description: Bad request
+          schema:
+            type: string
+        "403":
+          description: Authentication Token not detected
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      summary: Update my profile
+      tags:
+        - My Profile
+  /posts:
+    get:
+      consumes:
+        - application/json
+      description:
+        Accepts limit, offset, order, search (added as non-case sensitive
+        LIKE), title, body as query parameters
+      parameters:
+        - description: limit
+          in: query
+          name: limit
+          required: true
+          type: integer
+        - description: offset
+          in: query
+          name: offset
+          type: integer
+        - description: "order by eg. (asc) "
+          in: query
+          name: order
+          type: integer
+        - description: search (added to all string conditions as LIKE SQL search)
+          in: query
+          name: search
+          type: string
+        - description: title
+          in: query
+          name: title
+          type: string
+        - description: body
+          in: query
+          name: body
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/models.PaginatedPosts"
+        "400":
+          description: Error extracting query params
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      summary: Finds a list of posts
+      tags:
+        - Post
+    post:
+      consumes:
+        - application/json
+      description: Creates a new post
+      parameters:
+        - description: New Post
+          in: body
+          name: post
+          required: true
+          schema:
+            $ref: "#/definitions/models.CreatePost"
+      produces:
+        - text/plain
+      responses:
+        "201":
+          description: Post creation successful!
+          schema:
+            type: string
+        "400":
+          description: Post creation failed.
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      summary: Create Post
+      tags:
+        - Post
+  /posts/{id}:
+    delete:
+      consumes:
+        - application/json
+      description: Deletes an existing post
+      parameters:
+        - description: Post ID
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Deletion successful!
+          schema:
+            type: string
+        "400":
+          description: Failed post deletion
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      summary: Delete Post
+      tags:
+        - Post
+    get:
+      consumes:
+        - application/json
+      description: Find a post by ID
+      parameters:
+        - description: Post ID
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/db.Post"
+        "400":
+          description: "Can't find post with ID: {id}"
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      summary: Find post
+      tags:
+        - Post
+    put:
+      consumes:
+        - application/json
+      description: Updates an existing post
+      parameters:
+        - description: Update Post
+          in: body
+          name: post
+          required: true
+          schema:
+            $ref: "#/definitions/models.UpdatePost"
+        - description: Post ID
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/db.Post"
+        "400":
+          description: Failed post update
+          schema:
+            type: string
+        "403":
+          description: Authentication Token not detected
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      summary: Update Post
+      tags:
+        - Post
+  /users:
+    get:
+      consumes:
+        - application/json
+      description:
+        Accepts limit, offset, order, search (added as non-case sensitive
+        LIKE) and field names (eg. email=) query parameters to find a list of users.
+        Search is applied to all string fields.
+      parameters:
+        - description: limit
+          in: query
+          name: limit
+          required: true
+          type: integer
+        - description: offset
+          in: query
+          name: offset
+          type: integer
+        - description: "order by eg. (asc) "
+          in: query
+          name: order
+          type: integer
+        - description: search (added to all string conditions as LIKE SQL search)
+          in: query
+          name: search
+          type: string
+        - description: email
+          in: query
+          name: email
+          type: string
+        - description: name
+          in: query
+          name: name
+          type: string
+        - description: username
+          in: query
+          name: username
+          type: string
+        - description: verified
+          in: query
+          name: verified
+          type: boolean
+        - description: role
+          in: query
+          name: role
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/models.PaginatedUsersWithRole"
+        "400":
+          description: Error extracting query params
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      summary: Find a list of users
+      tags:
+        - User
+    post:
+      consumes:
+        - application/json
+      description: Creates a new user
+      parameters:
+        - description: New User
+          in: body
+          name: user
+          required: true
+          schema:
+            $ref: "#/definitions/models.CreateUser"
+      produces:
+        - text/plain
+      responses:
+        "201":
+          description: User creation successful!
+          schema:
+            type: string
+        "400":
+          description: User creation failed.
+          schema:
+            type: string
+      summary: Create User
+      tags:
+        - User
+  /users/{id}:
+    delete:
+      consumes:
+        - application/json
+      description: Deletes an existing user
+      parameters:
+        - description: User ID
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Deletion successful!
+          schema:
+            type: string
+        "400":
+          description: Failed user deletion
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      summary: Delete User
+      tags:
+        - User
+    get:
+      consumes:
+        - application/json
+      description: Find a user by ID
+      parameters:
+        - description: User ID
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/models.UserWithRole"
+        "400":
+          description: "Can't find user with ID: {id}"
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      summary: Find User
+      tags:
+        - User
+    put:
+      consumes:
+        - application/json
+      description: Updates an existing user
+      parameters:
+        - description: Update User
+          in: body
+          name: user
+          required: true
+          schema:
+            $ref: "#/definitions/models.UpdateUser"
+        - description: User ID
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/models.UserWithRole"
+        "400":
+          description: Failed user update
+          schema:
+            type: string
+        "403":
+          description: Authentication Token not detected
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      summary: Update User
+      tags:
+        - User
+  /users/forgot-password:
+    post:
+      consumes:
+        - application/json
+      description: Reset password
+      parameters:
+        - description: Reset Password Form
+          in: body
+          name: email
+          required: true
+          schema:
+            $ref: "#/definitions/models.ResetPasswordAndEmailVerification"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Password reset request successful!
+          schema:
+            type: string
+        "400":
+          description: Validation Errors
+          schema:
+            $ref: "#/definitions/models.ValidationError"
+      summary: Reset password
+      tags:
+        - Login
+  /users/login:
+    post:
+      consumes:
+        - application/json
+      description: Log in to user account
+      parameters:
+        - description: Login Form
+          in: body
+          name: user
+          required: true
+          schema:
+            $ref: "#/definitions/models.Login"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/models.LoginResponse"
+        "400":
+          description: Validation Errors
+          schema:
+            $ref: "#/definitions/models.ValidationError"
+        "401":
+          description: Invalid Credentials
+          schema:
+            type: string
+        "405":
+          description: Method not supported
+          schema:
+            type: string
+      summary: Login
+      tags:
+        - Login
+  /users/send-verification-email:
+    post:
+      consumes:
+        - application/json
+      description: Send Verification Email
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Email sent successfully
+          schema:
+            type: string
+        "400":
+          description: Validation Errors
+          schema:
+            $ref: "#/definitions/models.ValidationError"
+        "401":
+          description: Email already verified
+          schema:
+            type: string
+      security:
+        - BearerToken: []
+      summary: Send Verification Email
+      tags:
+        - Login
+  /users/verify-email/{token}:
+    get:
+      consumes:
+        - application/json
+      description: Email Verification
+      parameters:
+        - description: Token
+          in: path
+          name: token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Email verified successfully
+          schema:
+            type: string
+        "400":
+          description: Token is required
+          schema:
+            type: string
+        "401":
+          description: Invalid or expired token
+          schema:
+            type: string
+      summary: Email Verification
+      tags:
+        - Login
+securityDefinitions:
+  BearerToken:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

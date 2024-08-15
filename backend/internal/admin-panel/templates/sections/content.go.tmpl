@@ -1,0 +1,32 @@
+{{define "content"}}
+{{/* Home Page */}}
+{{if .PageType.HomePage}}
+{{template "home" .}}
+
+{{/* Find / Edit */}}
+{{else if or .PageType.EditPage .PageType.ViewPage }}
+{{template "form" .}}
+
+{{/* Find All */}}
+{{else if .PageType.ReadPage}}
+  {{template "find-all" .}}
+
+  {{/* Create */}}
+  {{else if .PageType.CreatePage}}
+    {{template "form" .}}
+
+  {{/* Delete */}}
+  {{else if .PageType.DeletePage}}
+    {{template "delete" .}}
+
+  {{/* Success */}}
+  {{else if .PageType.SuccessPage}}
+    {{template "success" .}}
+  
+  {{/* Error (No page state detected) */}}
+  {{else}}
+    {{template "fail"}}
+  {{ end }}
+
+  {{ end }}
+</div>

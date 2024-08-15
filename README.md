@@ -6,6 +6,11 @@ Golang server serving VUE3 frontend
 
 -contains Golang back-end
 
+```bash
+# Run server
+go run ./cmd
+```
+
 ## frontend folder
 
 -contains Vue front-end
@@ -14,5 +19,10 @@ Golang server serving VUE3 frontend
 cd frontend
 npm install
 npm run format
+# Run Dev mode
 npm run dev
+
+# Build project for production (for Go server to serve)
+# Served at /frontend/dist
+npm run build
 ```
