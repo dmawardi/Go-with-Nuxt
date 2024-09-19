@@ -20,11 +20,10 @@ go run ./cmd
 ```bash
 cd frontend
 npm install
-npm run format
 # Run Dev mode
 npm run dev
 
-# Build project for production (for Go server to serve)
-# Served at /frontend/dist
+# Build project for production (for Go server to serve via proxy)
 npm run build
+npm run start
 ```
